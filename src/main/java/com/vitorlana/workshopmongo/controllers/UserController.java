@@ -3,6 +3,7 @@ package com.vitorlana.workshopmongo.controllers;
 import com.vitorlana.workshopmongo.domain.User;
 import com.vitorlana.workshopmongo.dto.UserDTO;
 import com.vitorlana.workshopmongo.services.UserService;
+import com.vitorlana.workshopmongo.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,4 +42,18 @@ public class UserController {
         return ResponseEntity.created(uri).build();
     }
 
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id) {
+        userService.Delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Void> update(@RequestBody UserDTO objDTO, @PathVariable String id) {
+        User obj = userService.fromDTO(objDTO);
+        obj.setId(id);
+        userService.update(obj);
+        return ResponseEntity.noContent().build();
+    }
 }
+

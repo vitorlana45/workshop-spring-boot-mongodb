@@ -6,6 +6,8 @@ import com.vitorlana.workshopmongo.dto.UserDTO;
 import com.vitorlana.workshopmongo.repository.UserRepository;
 import com.vitorlana.workshopmongo.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Id;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -33,7 +35,25 @@ public class UserService {
         return userRepository.insert(obj);
     }
 
-    public User fromDTO(UserDTO objDTO){
+    public User fromDTO(UserDTO objDTO) {
         return new User(objDTO.getId(), objDTO.getName(), objDTO.getEmail());
+    }
+
+    public void Delete(String id) {
+        findById(id);
+        userRepository.deleteById(id);
+    }
+
+    public User update(User obj) {
+        String id = obj.getId();
+        User newObj = userRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("usuário não encontrado!") );
+        updateData(newObj, obj);
+        return userRepository.save(newObj);
+
+    }
+
+    private void updateData(User newObjToUpdate, User objClientUpdate) {
+        newObjToUpdate.setName(objClientUpdate.getName());
+        newObjToUpdate.setEmail(objClientUpdate.getEmail());
     }
 }
