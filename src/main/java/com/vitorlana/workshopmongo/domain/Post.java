@@ -1,7 +1,6 @@
 package com.vitorlana.workshopmongo.domain;
 
 import com.vitorlana.workshopmongo.dto.AuthorDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,7 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-@Document(collection = "posts")
+@Document
 public class Post implements Serializable {
 
     @Serial
