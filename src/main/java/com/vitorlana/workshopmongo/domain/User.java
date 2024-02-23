@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.repository.cdi.Eager;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -23,6 +24,10 @@ public class User implements Serializable {
     @DBRef(lazy = true) // os posts so serão carregados quando eu acessá-los
     private List<Post> posts = new ArrayList<>();
     public User() {
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 
     public User(String id, String name, String email) {

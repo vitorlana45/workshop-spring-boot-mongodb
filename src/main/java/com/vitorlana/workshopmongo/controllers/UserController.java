@@ -1,5 +1,6 @@
 package com.vitorlana.workshopmongo.controllers;
 
+import com.vitorlana.workshopmongo.domain.Post;
 import com.vitorlana.workshopmongo.domain.User;
 import com.vitorlana.workshopmongo.dto.UserDTO;
 import com.vitorlana.workshopmongo.services.UserService;
@@ -55,5 +56,12 @@ public class UserController {
         userService.update(obj);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping(value = "/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+        User obj = userService.findById(id);
+        return ResponseEntity.ok().body(obj.getPosts());
+    }
+
 }
 
